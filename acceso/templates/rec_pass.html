@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Pass</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        {% include "navbar.html" %}
+        <div class="header col-6 offset-md-2">
+            <h5>Bienvenido: {{active_user.nombre}} </h5>
+        </div>
+        <br>
+        <div class="col-6 offset-md-2">
+            <form method="post" action="/cambiar_pass">
+                {% csrf_token %}
+                <label for="">Ingrese su contraseña actual:</label>
+                <input type="password" class="form-control" name="pass_actual">
+                <br>
+                <label for="">Ingrese una nueva contraseña:</label>
+                <input type="password" class="form-control" name="pass_nueva">
+                <br>
+                <label for="">Repita su nueva contraseña:</label>
+                <input type="password" class="form-control" name="pass_confirmacion">
+                <br>
+                <button type="submit" class="btn btn-outline-primary">Aplicar cambios</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
