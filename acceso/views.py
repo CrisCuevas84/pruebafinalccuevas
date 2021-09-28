@@ -7,20 +7,19 @@ import bcrypt
 from .models import *
 
 # Create your views here.
+
 def login(request):
+    return redirect('main')
+
+
+def main(request):
     if 'user_id' in request.session:
-        return redirect('aplicacion/')
+        return redirect('travels/')
     return render(request, 'registro.html')
 
 
-def login2(request):
-    if 'user_id' in request.session:
-        return redirect('aplicacion/')
-    return render(request, 'login2.html')
-
-
 def inicio(request):
-    usuario = User.objects.filter(email=request.POST['email2'].lower())
+    usuario = User.objects.filter(username=request.POST['username2'].lower())
     errores = User.objects.validar_login(request.POST['password'], usuario)
 
     if len(errores) > 0:
@@ -30,7 +29,7 @@ def inicio(request):
     else:
         request.session['user_id'] = usuario[0].id
         request.session['user_name'] = usuario[0].nombre
-        return redirect('aplicacion/')
+        return redirect('travels/')
 
 
 def registrar(request):
@@ -57,10 +56,8 @@ def registro(request):
         #crear usuario
         user = User.objects.create(
             nombre=request.POST['nombre'],
-            alias=request.POST['alias'],
-            email=request.POST['email'],
+            username=request.POST['username'],
             password=password,
-            rol=rol,
         )
         #request.session['user_id'] = user.id
         #retornar mensaje de creacion correcta
@@ -74,43 +71,3 @@ def logout(request):
     return redirect('/')
 
 
-def view_user(request, user_id):
-    usuario = User.objects.get(id = user_id)
-    dict_review = Review.objects.filter(usuario = usuario).values('libro').annotate(total=Count('libro'))
-    arreglo_libros = []
-    for rev in dict_review:
-        arreglo_libros.append(
-            Libro.objects.filter(id = rev['libro'])
-        )
-    context = {
-        'user': usuario,
-        'rev_count': Review.objects.filter(usuario = usuario).count(),
-        'reviews': arreglo_libros,
-            }
-    return render(request, 'user.html', context)
-
-
-def cambiar_pass(request):
-    reg_user = User.objects.filter(id=request.session['user_id'])
-    errores = User.objects.validar_login(request.POST['pass_actual'], reg_user)
-    
-    if len(errores) > 0:
-        for key, msg in errores.items():
-            messages.error(request, msg)
-        return redirect('/')
-    else:
-        pass_nueva = request.POST['pass_nueva']
-        pass_confirm = request.POST['pass_confirmacion']
-
-        mensaje = User.objects.comparar_password(pass_nueva,pass_confirm)
-        print(mensaje)
-        if len(mensaje) > 0:
-            messages.error(request, mensaje)
-            return redirect('/')
-        
-        password_encriptado = User.objects.encriptar(pass_nueva)
-
-        reg_user[0].password = password_encriptado
-        reg_user[0].save()
-        request.session.flush()
-        return redirect('/')

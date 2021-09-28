@@ -11,8 +11,12 @@
 </head>
 <body>
     <div class="container">
-        <h1> {{ saludo }} Gaby</h1>
-        {% include "navbar.html" %}
+        <div class="col-6 offset-md-2 mt-2">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a class="mx-3" href="/">Home</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
         <div class="col-6 offset-md-2">
 
             {% if messages %} {% for message in messages %}
@@ -26,43 +30,28 @@
             </div>
             {% endfor %} {% endif %}
             <br>
-            <h3>Crea una reseña de un libro</h3>
+            <h3>Agrega un Viaje</h3>
             <form action="{% url 'insertar' %}" method="POST">
                 {% csrf_token %}
-                <label for="">Titulo libro:</label>
-                <input type="text" name="titulo" id="titulo" class="form-control">
+                <label for="destino">Destino:</label>
+                <input type="text" name="destino" id="destino" class="form-control">
                 <br>
-                <label for="">Autor:</label>
-                <label for="">Selecciona de la lista:</label>
-                <select name="sautor" id="sautor" class="form-control">
-                    <option value="0" selected>Selecciona un autor</option>
-                    {% for autor in autores %}
-                        <option value={{autor.id}}>{{autor.nombre}}</option>
-                    {% endfor %}
-                </select>
-                <label for="autor">O agrega un nuevo Autor:</label>
-                <input type="text" name="autor" id="autor" class="form-control">
+                <label for="descripcion">Descripcion:</label>
+                <input type="text" name="descripcion" id="descripcion" class="form-control">
                 <br>
-                <label for="">Review:</label>
-                <textarea name="review" id="review" cols="30" rows="10" class="form-control"></textarea>
+                <label for="datestart">Fecha comienzo:</label>
+                <input type="date" name="datestart" id="datestart" class="form-control">
                 <br>
-                <label for="">Rating:</label>
-                <select name="rating" id="rating" class="">
-                    <option value="0" selected>Selecciona un rating</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
+                <label for="dateend">Fecha Termino:</label>
+                <input type="date" name="dateend" id="dateend" class="form-control">
                 <br>
-                <input type="submit" value="Agregar Libro & Review" class="btn btn-outline-success p-2 mb-5">
+                <div class="justify-content-md-end">
+                    <input type="submit" value="Agregar Viaje" class="btn btn-outline-success p-2 mb-5">
+                </div>
             </form>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-
 </body>
-
 </html>

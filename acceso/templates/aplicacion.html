@@ -12,37 +12,46 @@
 
 <body>
     <div class="container">
-        {% include "navbar.html" %}
+        <div class="col-6 offset-md-2 mt-2">
+            <a class="d-grid gap-2 d-md-flex justify-content-md-end" href="/logout">Logout</a>
+        </div>
+        <div class="col-6 offset-md-2 mt-2">
+            <h2>Hola, {{request.session.user_name}}!</h2>
+        </div>
         <div class="header">
 
         </div>
         <br>
         <div class="container">
             <div class="row" >
-                <div class="col-6 offset-md-2">
-                    {% for lista in lista_libros|slice:":" %}
-                    <a href=" /libros/{{lista.id}} ">
-                        <h6>{{lista.titulo}}</h6>
-                    </a>
-                    <ul class="list-group ">
-                        <li class="list-group-item ">Rating: {{lista.librox.last.rating}}</li>
-                        <li class="list-group-item ">{{lista.librox.last.usuario.nombre}} - {{lista.librox.last.contenido}}</li>
-                        <li class="list-group-item ">{{lista.librox.last.updated_at}}</li>
-                    </ul>
-                    <br /> {% endfor%}
-                </div>
                 <!--Other books with reviews-->
                 <div class="col-6 offset-md-2">
-                    <h4 class="mb-3 ">LALAALALALALA</h4>
-                    <div class="h-25 w-100 border border-ligth py-2 px-2 bg-light text-dark overflow-auto ">
-                        <!--ciclo for-->
-                        {% for lista in lista_libros2 %}
-                        <a href="/libros/{{lista.id}} ">
-                            <p><ins>{{lista.titulo}}</ins></p>
-                        </a>
-                        {% endfor %}
+                    <h4 class="mb-3 ">Su Programa de viaje</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Destino</th>
+                                <th scope="col">Fecha Comienzo</th>
+                                <th scope="col">Fecha Termino</th>
+                                <th scope="col">Descripcion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for viaje in viajes|slice:":2" %}
+                            <tr>
+                                <th><a href="/travels/destination">{{ viaje.destino }}</a>                                </th>
+                                <td>{{ viaje.travel_start }}</td>
+                                <td>{{ viaje.travel_end }}</td>
+                                <td>{{ viaje.descripcion }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>                   
                     </div>
                 </div>
+            </div>
+            <div class="col-6 offset-md-2 mt-2">
+                <a class="d-grid gap-2 d-md-flex justify-content-md-end" href="/travels/add">Agrega un viaje</a>
             </div>
         </div>
     </div>

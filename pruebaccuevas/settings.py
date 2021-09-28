@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_(s&jb=@^aw7ro#mu4bxh&r4fn@rw2s#6t-vq-bd8b4$^4s-dk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 # Cambiar al subir a producción
-DEBUG = False
+#DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -34,7 +34,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'aplicacion',
+    'travels',
     'acceso',
     'django.contrib.admin',
     'django.contrib.auth',

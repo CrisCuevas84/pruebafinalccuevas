@@ -12,24 +12,10 @@
     </head>
 <body>
     <div class="container">
-        <div class="row justify-content-center m-2">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light col-6 offset-md-1 mt-2">
-                <a class="navbar-brand" href="/">Home</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="login2">Login</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-
-            <div class="col-6 offset-md-1 card">
-                <h3 class="card-header text-center">Bienvenido!!</h3>
+        <div class="row justify-content-center m-2">    
+            <h3 class="offset-md-4 p-3">Bienvenido!</h3>        
+            <div class="col-4 offset-md-1 card m-2">                
+                <div class="card-header">Registro</div>
                 <div class="card-body">
                     {% if messages %} 
                         {% for message in messages %}
@@ -43,7 +29,6 @@
                             </div>
                         {% endfor %} 
                     {% endif %}
-
                     <form action="registro" method="POST">
                         {% csrf_token %}
                         <input hidden name="rol" id="rol" value="1">
@@ -52,49 +37,42 @@
                             <input type="text" class="form-control" name="nombre" id="nombre">
                         </fieldset>
                         <fieldset>
-                            <label for="apellido">Alias:</label>
-                            <input type="text" class="form-control" name="alias" id="alias">
-                        </fieldset>
-                        <fieldset>
-                            <label for="email">Email:</label>
-                            <input type="text" class="form-control" name="email" id="email">
+                            <label for="username">Usuario:</label>
+                            <input type="text" class="form-control" name="username" id="username">
                         </fieldset>
                         <fieldset>
                             <label for="password">Password</label>
                             <input type="password" class="form-control" name="password" id="password">
                         </fieldset>
                         <fieldset>
+                            <p>*Password debe tener al menos 8 caracteres</p>
                             <label for="password2">Confirmar Password:</label>
                             <input type="password" class="form-control" name="password2" id="password2">
                         </fieldset>
-                        <!--<fieldset>
-                            <label for="cumple">Cumpleaños:</label>
-                            <input type="date" class="form-control" name="cumple">
-                        </fieldset>-->
                         <br>
-                        <button class="btn btn-outline-primary">Registro</button>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-outline-primary">Registro</button>
+                        </div>
                     </form>
                 </div>
             </div>
-
-            <div class="col-6 offset-md-1 card mt-2">
+            <div class="col-4  card m-2">
                 <div class="card-header">Login</div>
                 <div class="card-body">
                     <form  action="login" method="POST">
                         {% csrf_token %}
                         <fieldset>
-                            <label for="email2">Email:</label>
-                            <input type="text" name="email2" id="email2">
+                            <label for="username2">Usuario:</label>
+                            <input type="text" name="username2" id="username2">
                         </fieldset>
-                        <!--<fieldset>
-                            <label for="perro">Perro:</label>
-                            <input type="text" name="perro" id="perro">
-                        </fieldset>-->
+                        <br>
                         <fieldset>
                             <label for="password3">Password:</label>
                             <input type="password" name="password" id="password3">
                         </fieldset>
-                        <button class="btn btn-outline-primary">Login</button>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-outline-primary">Login</button>
+                        </div>
                     </form>
                 </div>
             </div>

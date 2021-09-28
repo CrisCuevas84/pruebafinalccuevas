@@ -8,19 +8,15 @@ from django.db.models.fields import CharField
 class UserManager(models.Manager):
     def basic_validator(self, postData):
         errores = {}
-        if len(User.objects.filter(email=postData['email'])) > 0:
-            errores['existe'] = "Email ya registrado"
+        if len(User.objects.filter(username=postData['username'])) > 0:
+            errores['existe'] = "Usuario ya registrado"
         else:
             if len(postData['nombre']) == 0:
                 errores['nombre'] = "Nombre es obligatorio"
-            if len(postData['alias']) == 0:
-                errores['alias'] = "Alias es obligatorio"
-            EMAIL = re.compile(
-                r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-            if not EMAIL.match(postData['email']):
-                errores['email'] = "email invalido"
-            if len(postData['password']) < 6:
-                errores['password'] = "Password debe ser mayor a 6 caracteres"
+            if len(postData['username']) == 0:
+                errores['username'] = "Usuario es obligatorio"
+            if len(postData['password']) < 7:
+                errores['password'] = "Password debe tener al menos 8 caracteres"
             val_pass = self.comparar_password(postData['password'],postData['password2'])
             if len(val_pass) > 0:
                 errores['password'] = val_pass
@@ -32,7 +28,7 @@ class UserManager(models.Manager):
         return password.decode('utf-8')
 
 
-    def validar_login(self, password, usuario ):
+    def validar_login(self, password, usuario):
         errores = {}
         if len(usuario) > 0:
             pw_hash = usuario[0].password
@@ -53,49 +49,16 @@ class UserManager(models.Manager):
 class User(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=40)
-    alias = models.CharField(max_length=40)
-    email = models.CharField(max_length=40)
+    username = models.CharField(max_length=40)
     password = models.CharField(max_length=255)
-    #cumple = models.DateTimeField()
-    rol = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    #historico = models.IntegerField(default=0)
     objects = UserManager()
 
 
-""" class Autor(models.Model):
-    id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=40)
-
-
-class Libro(models.Model):
-    id = models.AutoField(primary_key=True)
-    titulo = models.CharField(max_length=40)
-    autor = models.ForeignKey(Autor, on_delete=CASCADE, related_name="libros")
-
-
-class Review(models.Model):
-    id = models.AutoField(primary_key=True)
-    usuario = models.ForeignKey(User, on_delete=CASCADE, related_name="reviewer")
-    contenido = models.TextField(default='')
-    libro = models.ForeignKey(Libro, on_delete=CASCADE, related_name="librox")
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    rating = models.IntegerField(default=0)
-
-
-class Producto(models.Model):
-    codigo = models.CharField(max_length=255)
-    nombre = models.CharField(max_length=60)
-    marca = models.CharField(max_length=255)
+class Viaje(models.Model):
+    destino = models.CharField(max_length=255)
     descripcion = models.CharField(max_length=255)
-    stock = models.IntegerField(default=0)
-    imagen = models.CharField(max_length=255)
-    precio = models.IntegerField(default=0)
-"""
-
-
-
-
-
+    usuarios = models.ManyToManyField(User, related_name="usuarios")
+    travel_start = models.DateField() 
+    travel_end = models.DateField()
